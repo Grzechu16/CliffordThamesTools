@@ -33,6 +33,6 @@
       <TextField fx:id="pathTextField" layoutX="256.0" layoutY="161.0" prefHeight="25.0" prefWidth="219.0" promptText="Type or choose path to price file -&gt;" />
       <Button id="pathButton" fx:id="pathButton" layoutX="483.0" layoutY="161.0" mnemonicParsing="false" onAction="#chooseFile" prefHeight="25.0" prefWidth="35.0" text="..." />
       <Button fx:id="findButton" layoutX="617.0" layoutY="161.0" mnemonicParsing="false" onAction="#checkIfEmpty" prefHeight="25.0" prefWidth="117.0" text="Find" />
-      <Button id="exitButton" fx:id="exitButton" layoutX="745.0" layoutY="161.0" mnemonicParsing="false" onAction="#testMethod" prefHeight="25.0" text="Exit" />
+      <Button id="exitButton" fx:id="exitButton" layoutX="745.0" layoutY="161.0" mnemonicParsing="false" onAction="#closeApp" prefHeight="25.0" text="Exit" />
    </children>
 </Pane>

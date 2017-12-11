@@ -4,9 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -47,10 +45,10 @@ public class Controller {
             pathTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
         }
     }
-    //TODO: Okienko z błędem
+
     public void checkIfEmpty() throws IOException {
         if ((finisTextField.getText().equals("")) || (pathTextField.getText().equals(""))) {
-            System.out.println("dupa");
+           showAlert("Specify part number and path to price file first");
         } else
             readFile();
     }
@@ -66,7 +64,7 @@ public class Controller {
             bufferedReader = new BufferedReader(fileReader);
             while ((row = bufferedReader.readLine()) != null) {
 
-                if (row.toUpperCase().contains(finis)) {
+                if (row.contains(finis)) {
                     for (int i = 0; i < listLabel.size(); i++) {
                         if (row.contains(listString.get(i))) {
                             listLabel.get(i).setTextFill(javafx.scene.paint.Paint.valueOf(String.valueOf(Color.GREEN)));
@@ -80,12 +78,21 @@ public class Controller {
             }
             bufferedReader.close();
         } catch (Exception e1) {
-            //TODO: Obsługa błędu
-            System.out.println("oj");
+            showAlert("Invalid or missing file");
 
             e1.printStackTrace();
         }
 
+    }
+
+    public void showAlert(String text){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK);
+        alert.setHeaderText(text);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK) {
+            alert.close();
+        }
     }
 
     private void createList() {
@@ -137,14 +144,10 @@ public class Controller {
         listString.add("SF");
         listString.add("DX");
     }
-//TODO: Zrobić uruchamianie metody
-    public void testMethod() throws IOException {
-        Stage stage =  new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        Parent root = FXMLLoader.load(getClass().getResource("error.fxml"));
-        stage.setScene(new Scene(root, 150, 150));
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.show();
+
+    public void closeApp() throws IOException {
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.close();
     }
 }
 
