@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Controller {
 
@@ -26,21 +27,22 @@ public class Controller {
     private String path;
     private ArrayList<Label> listLabel;
     private ArrayList<String> listString;
+    @FXML
+    private List<Label> markets;
 
     @FXML
     Label axLabel, bxLabel, chLabel, csLabel, dkLabel, dxLabel, edLabel, exLabel, fxLabel, gbLabel, grLabel,
             hxLabel, irLabel, ixLabel, nlLabel, nxLabel, plLabel, pxLabel, ruLabel, roLabel, sfLabel, sxLabel;
-
     @FXML
-    Button findButton, pathButton, exitButton;
-
+    Button findButton, pathButton, restartButton, exitButton;
     @FXML
     TextField finisTextField, pathTextField;
-//TODO: Wymuszenie właściwego pliku
+
     public void chooseFile() {
         fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choose the newest price file");
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("*", "csv"));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.csv", "csv", "csv");
+        fileChooser.setFileFilter(filter);
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             pathTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
         }
@@ -48,7 +50,7 @@ public class Controller {
 
     public void checkIfEmpty() throws IOException {
         if ((finisTextField.getText().equals("")) || (pathTextField.getText().equals(""))) {
-           showAlert("Specify part number and path to price file first");
+            showAlert("Specify part number and path to price file first");
         } else
             readFile();
     }
@@ -58,15 +60,22 @@ public class Controller {
         finis = finisTextField.getText().toString();
         path = pathTextField.getText().toString();
         String row = "";
+        String finisInRow;
+        String marketInRow;
+        int counter = 0;
 
         try {
             fileReader = new FileReader(path);
             bufferedReader = new BufferedReader(fileReader);
             while ((row = bufferedReader.readLine()) != null) {
-
-                if (row.contains(finis)) {
+                finisInRow = String.valueOf(row.charAt(0)) + String.valueOf(row.charAt(1)) + String.valueOf(row.charAt(2)) +
+                        String.valueOf(row.charAt(3)) + String.valueOf(row.charAt(4)) + String.valueOf(row.charAt(5)) +
+                        String.valueOf(row.charAt(6));
+                if (finisInRow.equals(finis)) {
+                    counter++;
                     for (int i = 0; i < listLabel.size(); i++) {
-                        if (row.contains(listString.get(i))) {
+                        marketInRow = String.valueOf(row.charAt(8) + String.valueOf(row.charAt(9)));
+                        if (marketInRow.contains(listString.get(i))) {
                             listLabel.get(i).setTextFill(javafx.scene.paint.Paint.valueOf(String.valueOf(Color.GREEN)));
                             listLabel.remove(i);
                             listString.remove(i);
@@ -75,6 +84,9 @@ public class Controller {
                             listLabel.get(i).setTextFill(javafx.scene.paint.Paint.valueOf(String.valueOf(Color.RED)));
                     }
                 }
+            }
+            if (counter == 0) {
+                showAlert("Part not found in price file");
             }
             bufferedReader.close();
         } catch (Exception e1) {
@@ -85,7 +97,7 @@ public class Controller {
 
     }
 
-    public void showAlert(String text){
+    public void showAlert(String text) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK);
         alert.setHeaderText(text);
         alert.showAndWait();
@@ -97,52 +109,29 @@ public class Controller {
 
     private void createList() {
         listLabel = new ArrayList<>();
-        listLabel.add(axLabel);
-        listLabel.add(bxLabel);
-        listLabel.add(chLabel);
-        listLabel.add(csLabel);
-        listLabel.add(dkLabel);
-        listLabel.add(dxLabel);
-        listLabel.add(edLabel);
-        listLabel.add(exLabel);
-        listLabel.add(fxLabel);
-        listLabel.add(gbLabel);
-        listLabel.add(grLabel);
-        listLabel.add(hxLabel);
-        listLabel.add(irLabel);
-        listLabel.add(ixLabel);
-        listLabel.add(nlLabel);
-        listLabel.add(nxLabel);
-        listLabel.add(plLabel);
-        listLabel.add(pxLabel);
-        listLabel.add(ruLabel);
-        listLabel.add(roLabel);
-        listLabel.add(sfLabel);
-        listLabel.add(sxLabel);
-
         listString = new ArrayList<>();
-        listString.add("AX");
-        listString.add("BX");
-        listString.add("CH");
-        listString.add("CS");
-        listString.add("DK");
-        listString.add("DX");
-        listString.add("ED");
-        listString.add("EX");
-        listString.add("FX");
-        listString.add("GB");
-        listString.add("GR");
-        listString.add("HX");
-        listString.add("IR");
-        listString.add("IX");
-        listString.add("NL");
-        listString.add("NX");
-        listString.add("PL");
-        listString.add("PX");
-        listString.add("RU");
-        listString.add("RO");
-        listString.add("SF");
-        listString.add("DX");
+
+        Label[] labels = {axLabel, bxLabel, chLabel, csLabel, dkLabel, dxLabel, edLabel, exLabel, fxLabel,
+                gbLabel, grLabel, hxLabel, irLabel, ixLabel, nlLabel, nxLabel, plLabel, pxLabel,
+                ruLabel, roLabel, sfLabel, sxLabel};
+        String[] marketTab = {"AX", "BX", "CH", "CS", "DK", "DX", "ED", "EX", "FX", "GB", "GR", "HX", "IR", "IX",
+                "NL", "NX", "PL", "PX", "RU", "RO", "SF", "SX"};
+
+        for (Label l : labels)
+            listLabel.add(l);
+        for (String s : marketTab)
+            listString.add(s);
+    }
+
+    public void restartApp() throws IOException {
+        Stage stage = (Stage) restartButton.getScene().getWindow();
+        stage.close();
+        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Part Finder v.1.0 2017");
+        primaryStage.setScene(new Scene(root, 800, 200));
+        primaryStage.show();
+
     }
 
     public void closeApp() throws IOException {
