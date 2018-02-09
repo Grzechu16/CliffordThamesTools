@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="769.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="price.Controller">
    <children>
       <Label id="ax" fx:id="axLabel" layoutX="30.0" layoutY="30.0" text="AX - Austria" />
       <Label id="bx" fx:id="bxLabel" layoutX="30.0" layoutY="60.0" text="BX - Belgium" />
@@ -32,8 +32,8 @@
       <TextField id="finisText" fx:id="finisTextField" layoutX="19.0" layoutY="161.0" prefHeight="25.0" prefWidth="227.0" promptText="Type the part number here" />
       <TextField fx:id="pathTextField" layoutX="256.0" layoutY="161.0" prefHeight="25.0" prefWidth="219.0" promptText="Type or choose path to price file -&gt;" />
       <Button id="pathButton" fx:id="pathButton" layoutX="483.0" layoutY="161.0" mnemonicParsing="false" onAction="#chooseFile" prefHeight="25.0" prefWidth="35.0" text="..." />
-      <Button fx:id="findButton" layoutX="560.0" layoutY="161.0" mnemonicParsing="false" onAction="#checkIfEmpty" prefHeight="25.0" prefWidth="117.0" text="Find" />
-      <Button id="exitButton" fx:id="exitButton" layoutX="751.0" layoutY="161.0" mnemonicParsing="false" onAction="#closeApp" prefHeight="25.0" text="Exit" />
-      <Button id="restartButton" fx:id="restartButton" layoutX="687.0" layoutY="161.0" mnemonicParsing="false" onAction="#restartApp" prefHeight="25.0" text="Restart" />
+      <Button fx:id="findButton" layoutX="560.0" layoutY="161.0" mnemonicParsing="false" onAction="#checkIfEmpty" prefHeight="25.0" prefWidth="88.0" text="Find" />
+      <Button id="exitButton" fx:id="exitButton" layoutX="715.0" layoutY="161.0" mnemonicParsing="false" onAction="#closeApp" prefHeight="25.0" text="Exit" />
+      <Button id="restartButton" fx:id="restartButton" layoutX="655.0" layoutY="161.0" mnemonicParsing="false" onAction="#restartApp" prefHeight="25.0" prefWidth="54.0" text="Restart" />
    </children>
 </Pane>

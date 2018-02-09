@@ -1,20 +1,20 @@
-package sample;
+package price;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TitledPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Part Finder v.1.0 2017");
+        Parent root = FXMLLoader.load(getClass().getResource("priceLayout.fxml"));
+        primaryStage.setTitle("Part Finder v.1.0 2018");
         primaryStage.setScene(new Scene(root, 800, 200));
         primaryStage.show();
+        root.requestFocus();
     }
 
 
